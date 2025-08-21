@@ -8,18 +8,20 @@ def process_face(frame, face_detection):
 
     if out.detections is not None:
          for detection in out.detections:
-              bbox = detection.location_data.relative_bounding_box
+                bbox = detection.location_data.relative_bounding_box
 
-              x, y, w, h = bbox.xmin, bbox.ymin, bbox.width, bbox.height
+                x, y, w, h = bbox.xmin, bbox.ymin, bbox.width, bbox.height
 
-              x = int(x*W)
-              y = int(y*H)
-              w = int(w*W)
-              h = int(h*H)
+                x = int(x*W)
+                y = int(y*H)
+                w = int(w*W)
+                h = int(h*H)
+                
 
-              frame[y:y+w, x:x+h, :] = cv2.blur(frame[y:y+w, x:x+h, :], (30,30))
-              
-              return frame
+                # cv2.rectangle(frame, (y,h), (x, w), (0,255,0), 2)
+                frame[y:y+w, x:x+h, :] = cv2.blur(frame[y:y+w, x:x+h, :], (30,30))
+                
+                return frame
 
 
 def main():
