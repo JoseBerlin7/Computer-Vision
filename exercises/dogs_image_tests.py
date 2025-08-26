@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import os 
+from matplotlib import pyplot as plt
 
 def show_image(img, title='Image'):
     cv2.imshow(title, img)
@@ -61,7 +62,20 @@ def main():
     # show_image(img_thres)
 
     adap_thres = cv2.adaptiveThreshold(img_gray, 255, cv2.ADAPTIVE_THRESH_GAUSSIAN_C, cv2.THRESH_BINARY, 31, 8)
-    # show_image(adap_thres)
+    show_image(adap_thres)
 
 
 main()
+
+
+def hist():
+    # Histogram calculated the frequency of intensity of each color ranging [0,255]
+    img_path = os.path.join('imgs','dog.jpg')
+    img = cv2.imread(img_path, cv2.IMREAD_GRAYSCALE)
+
+    # print(img.shape)
+
+    plt.hist(img.ravel(),256,[0,256])
+    plt.show()
+
+# hist()

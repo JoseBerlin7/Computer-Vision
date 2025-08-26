@@ -8,6 +8,7 @@
 
 import cv2
 import numpy as np
+import streamlit as st
 
 class effects:
     def __init__(self):
@@ -65,5 +66,48 @@ def main():
     cv2.destroyAllWindows()
     # pass
 
+def st_main():
+    st.title("Live cam Filter")
+
+    filter_option = st.selectbox(
+        "Choose a filter", 
+        ["Original","Gray","Sepia","Negative","Cartoon","Blur"]
+    )
+
+    start = st.checkbox("Start camera")
+
+    frame_win = st.image([])
+
+    if start:
+        cam = cv2.VideoCapture(0)
+        c = effects()
+
+        while True:
+            ret, frame = cam.read()
+            if not ret:
+                st.write("Failed!")
+                break
+
+            frame = cv2.flip(frame, 1)
+
+            if filter_option =="Gray":
+                frame = c.gray(frame)
+                frame_win.image(frame, channels="GRAY")
+                continue
+            elif filter_option == "Sepia":
+                frame = c.serpia(frame)
+            elif filter_option == "Negative":
+                frame = c.negative(frame)
+            elif filter_option == "Cartoon":
+                frame = c.cartoon(frame)
+            elif filter_option == "Blur":
+                frame = c.blur(frame)
+            
+            frame_win.image(frame, channels="BGR")
+            
+        cam.release()
+
+
+
 if __name__ == "__main__":
-    main()
+    st_main()

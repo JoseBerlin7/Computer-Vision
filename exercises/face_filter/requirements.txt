@@ -1,0 +1,5 @@
+opencv-python
+streamlit
+altair==4.2.2
+numpy
+
